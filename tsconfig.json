@@ -1,0 +1,24 @@
+{
+  // Type-checking config for the whole project (sources and tests).
+  // Builds use tsconfig.build.json.
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": ["es2023"],
+    "module": "nodenext",
+    "types": ["node"],
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Keep the source runnable by Node's native type stripping (`node src/main.ts`):
+    // only erasable TS syntax, explicit `import type`, and `.ts` import specifiers
+    // rewritten to `.js` on emit.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
+
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src", "test"]
+}

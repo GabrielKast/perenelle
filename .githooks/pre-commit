@@ -1,0 +1,6 @@
+#!/bin/sh
+# Fast checks only. Typecheck and tests run with `npm run check`.
+# Note: checks the working tree, not only the staged content.
+set -e
+npm run --silent format:check
+npm run --silent lint

@@ -1,0 +1,46 @@
+{
+  "name": "perenelle",
+  "version": "0.1.0",
+  "description": "Docker compose management",
+  "type": "module",
+  "bin": {
+    "prnl": "dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node src/main.ts",
+    "typecheck": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielKast/perenelle.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GabrielKast/perenelle/issues"
+  },
+  "homepage": "https://github.com/GabrielKast/perenelle#readme",
+  "dependencies": {
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.5",
+    "eslint": "^10.12.0",
+    "prettier": "^3.9.9",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1"
+  }
+}
