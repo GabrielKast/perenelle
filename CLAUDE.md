@@ -467,8 +467,9 @@ Working files for one GitHub issue. `<issue>` is the GitHub issue number;
 - `report`: final summary when the issue is closed: what changed, decisions,
   verification, remaining concerns.
 
-These files are temporary: anything that must outlive the issue goes to the
-code, `docs/`, or `docs/decisions.md`.
+These files are working material, but they are committed and kept: they are
+often re-read and reused days or weeks later. Still, anything that must outlive
+the issue as a reference goes to the code, `docs/`, or `docs/decisions.md`.
 
 ---
 
