@@ -1,0 +1,34 @@
+{
+  // Compiler options shared by every package. Each package's tsconfig.json
+  // extends this file and sets its own rootDir/outDir (paths in this file
+  // would resolve relative to the repository root, not to the package).
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": ["es2023"],
+    "module": "nodenext",
+    "types": ["node"],
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Keep sources runnable by Node's native type stripping: only erasable TS
+    // syntax, explicit `import type`, and `.ts` import specifiers rewritten to
+    // `.js` on emit.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
+
+    // Project references (`tsc -b`): each package is built separately and
+    // other packages type-check against its emitted .d.ts files.
+    "composite": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    // Build setup A1: cross-package imports resolve to dist/ (see docs/build.md).
+    // A2: resolve them to sources instead, together with a "source" condition
+    // in each package's "exports":
+    //   "customConditions": ["source"],
+
+    "skipLibCheck": true
+  }
+}

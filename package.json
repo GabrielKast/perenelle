@@ -1,40 +1,35 @@
 {
-  "name": "perenelle",
-  "version": "0.1.0",
-  "description": "Docker compose management",
+  "name": "perenelle-workspace",
+  "private": true,
   "type": "module",
-  "bin": {
-    "prnl": "dist/main.js"
-  },
-  "files": [
-    "dist"
+  "//": [
+    "Build setup A1: cross-package imports resolve to each package's compiled dist/,",
+    "so `start` and `test` always run `tsc -b` first. See docs/build.md.",
+    "A2 (switch only if the build step becomes slow): run from sources with",
+    "  \"start\": \"node --conditions=source packages/cli/src/main.ts\",",
+    "  \"test\": \"node --conditions=source --test \\\"packages/*/src/**/*.test.ts\\\"\""
+  ],
+  "workspaces": [
+    "packages/core",
+    "packages/settings",
+    "packages/docker",
+    "packages/cli"
   ],
   "engines": {
     "node": ">=22.18.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "start": "node src/main.ts",
-    "typecheck": "tsc",
+    "build": "tsc -b",
+    "clean": "tsc -b --clean",
+    "start": "tsc -b && node packages/cli/dist/main.js",
+    "test": "tsc -b && node --test \"packages/*/src/**/*.test.ts\"",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --test \"test/**/*.test.ts\"",
-    "check": "npm run typecheck && npm run lint && npm run format:check && npm test",
+    "check": "npm run lint && npm run format:check && npm test",
     "prepare": "git config core.hooksPath .githooks"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GabrielKast/perenelle.git"
-  },
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/GabrielKast/perenelle/issues"
-  },
-  "homepage": "https://github.com/GabrielKast/perenelle#readme",
-  "dependencies": {
-    "commander": "^15.0.0"
-  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.5",

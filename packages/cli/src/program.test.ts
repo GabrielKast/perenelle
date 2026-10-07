@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { CommanderError } from "commander";
-import { createProgram } from "../../../src/adapters/cli/program.ts";
+import { createProgram } from "./program.ts";
 
 function run(args: string[]): { output: string; error: CommanderError } {
   let output = "";

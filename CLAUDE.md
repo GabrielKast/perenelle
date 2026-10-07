@@ -341,6 +341,16 @@ The domain must not depend on Docker, Node.js, CLI, filesystem APIs, network API
 
 Infrastructure details belong in adapters.
 
+## Packages
+
+The repository is an npm workspace: `packages/core` (domain, use cases, ports),
+`packages/settings` and `packages/docker` (adapters), `packages/cli` (the
+published `prnl` command and composition root). Import boundaries between them
+are enforced by ESLint.
+
+Design decisions and their reasons are recorded in `docs/decisions.md`; record
+new ones there. Build setup and its traps: `docs/build.md`.
+
 ## Domain
 
 Model meaningful Perenelle concepts, not merely Docker's API.
@@ -403,6 +413,25 @@ Before adding a dependency, check whether the runtime, existing dependencies, or
 Do not swallow errors or blindly catch/rethrow them.
 
 Translate infrastructure failures into meaningful application/CLI errors at appropriate boundaries.
+
+---
+
+# Domain invariants
+
+## prnl never modifies a managed project
+
+A managed project is a Docker Compose project: a root directory containing one or
+more compose files.
+
+prnl must never modify, delete, or add any file inside a managed project's root
+directory.
+
+- prnl changes a project's behavior only through generated compose override files,
+  passed after the project's own files:
+  `docker compose -p <name> -f <original>... -f <generated>...`
+- Every file prnl generates or stores lives under `~/.prnl/`.
+
+Any code path that writes inside a project root is a defect, whatever the reason.
 
 ---
 

@@ -2,7 +2,7 @@
 // Composition root: wires adapters and use cases, then hands control to the CLI.
 
 import { readFileSync } from "node:fs";
-import { createProgram } from "./adapters/cli/program.ts";
+import { createProgram } from "./program.ts";
 
 // package.json sits one level above both src/main.ts and dist/main.js.
 // This path is resolved relative to this file at runtime: it would break if the

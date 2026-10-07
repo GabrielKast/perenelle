@@ -1,0 +1,19 @@
+{
+  "name": "@perenelle/docker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "//": [
+    "Build setup A1: exports point to compiled dist/ only (see docs/build.md).",
+    "A2: add \"source\": \"./src/index.ts\" as the first condition of \".\"."
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@perenelle/core": "*"
+  }
+}
