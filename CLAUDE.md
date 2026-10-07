@@ -435,6 +435,43 @@ Any code path that writes inside a project root is a defect, whatever the reason
 
 ---
 
+# Working files (`.claude/`)
+
+Work is tracked as GitHub issues. Working notes live in `.claude/` so that a
+session can be closed and resumed without losing decisions, context or TODOs.
+
+## `.claude/WIP-<YYYY-MM-DD>.md`
+
+Session hand-off, written at the end of a working session:
+
+- where the development stands (last commits, what works);
+- decisions taken during the session (and where they are recorded);
+- open questions and TODOs;
+- next steps.
+
+When resuming, read the most recent WIP file first. Durable decisions also go
+to `docs/decisions.md`; the WIP file is a snapshot, not the source of truth.
+
+## `.claude/issues/PRNL-<issue>-<type>[-<subname>].md`
+
+Working files for one GitHub issue. `<issue>` is the GitHub issue number;
+`<subname>` is an optional short kebab-case purpose (e.g.
+`PRNL-12-discovery-compose-merge.md`).
+
+`<type>` is one of:
+
+- `discovery`: investigation and findings before or during design (options,
+  experiments, external facts checked);
+- `workfile`: temporary working notes, drafts, scratch content for the issue;
+- `status`: current state of the issue: done, in progress, blocked, next steps;
+- `report`: final summary when the issue is closed: what changed, decisions,
+  verification, remaining concerns.
+
+These files are temporary: anything that must outlive the issue goes to the
+code, `docs/`, or `docs/decisions.md`.
+
+---
+
 # Definition of Done
 
 A non-trivial change is complete when:
