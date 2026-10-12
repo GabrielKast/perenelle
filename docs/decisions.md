@@ -76,3 +76,21 @@ become slow. Details, traps and the switch procedure: [build.md](build.md).
 1. Manage **one** compose project: register it (root + compose files), store it
    in `~/.prnl/settings.json`, then start, stop, restart and status.
 2. Then: manage several compatible compose projects.
+
+## 2026-10-12 — Project model
+
+Details and examples: `.claude/issues/PRNL-1-discovery-project-model.md`.
+
+- **A Project is `{ name, root, composeFiles }`**, plain data in core.
+- **The prnl name is the Compose project name** (`-p`), so prnl and plain
+  `docker compose` see the same project. Defaults to the root's basename
+  normalized to Compose's rules; overridable at registration; unique.
+- **Compose files are an explicit, ordered list relative to the root.** prnl
+  always passes `-f`, which disables Compose's automatic loading of
+  `compose.override.yaml`; the list must therefore be complete.
+- **POSIX only, no Windows.** The CLI normalizes paths; the domain validates
+  with string checks (absolute root; relative files without `..`).
+- **Generated files live in `~/.prnl/projects/<name>/`, named by purpose**, and
+  are passed after the project's files, in an order defined in code. They are
+  written when a command changes the configuration and kept until the next one,
+  for debugging. Settings remain the source of truth.
