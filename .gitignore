@@ -75,3 +75,7 @@ temp/
 # Claude Code personal settings
 
 .claude/settings.local.json
+
+# Local working files: hand-offs, reference notes, experiments (see CLAUDE.md)
+
+.claude/workdir/

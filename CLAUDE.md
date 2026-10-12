@@ -440,9 +440,10 @@ Any code path that writes inside a project root is a defect, whatever the reason
 Work is tracked as GitHub issues. Working notes live in `.claude/` so that a
 session can be closed and resumed without losing decisions, context or TODOs.
 
-## `.claude/WIP-<YYYY-MM-DD>.md`
+## `.claude/workdir/WIP-<YYYY-MM-DD>.md`
 
-Session hand-off, written at the end of a working session:
+Session hand-off, written at the end of a working session (not committed, see
+`.claude/workdir/` below):
 
 - where the development stands (last commits, what works);
 - decisions taken during the session (and where they are recorded);
@@ -470,6 +471,32 @@ Working files for one GitHub issue. `<issue>` is the GitHub issue number;
 These files are working material, but they are committed and kept: they are
 often re-read and reused days or weeks later. Still, anything that must outlive
 the issue as a reference goes to the code, `docs/`, or `docs/decisions.md`.
+
+## `.claude/workdir/` — never committed
+
+`.claude/workdir/` is git-ignored. It holds what must not be published:
+
+- session hand-offs (`WIP-<YYYY-MM-DD>.md`);
+- external reference material (other codebases, earlier tools, their
+  documentation) and raw notes taken from it;
+- experiments and throw-away trials.
+
+Everything else (issue files, findings restated in generic terms, decisions)
+is committed as usual.
+
+This repository is public. Content from external reference sources must never
+be committed, in any form:
+
+- never copy or quote it in code, comments, `docs/`, `.claude/issues/`, commit
+  messages, GitHub issues or pull requests;
+- never name the source, nor any product, company, team, service, repository,
+  host or person it mentions;
+- when a finding is useful, restate it as Perenelle's own reasoning, in generic
+  terms (Docker Compose, nginx, ports, ...), and record it the usual way
+  (`docs/decisions.md`, issue files).
+
+Before committing, check that the diff contains nothing traceable to such a
+source.
 
 ---
 
