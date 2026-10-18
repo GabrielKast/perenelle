@@ -94,3 +94,16 @@ Details and examples: `.claude/issues/PRNL-1-discovery-project-model.md`.
   are passed after the project's files, in an order defined in code. They are
   written when a command changes the configuration and kept until the next one,
   for debugging. Settings remain the source of truth.
+
+## 2026-10-18 — Naming conventions
+
+- **camelCase** for variables, functions, parameters and properties;
+  **PascalCase** for types, interfaces and classes. No UPPER_CASE constants.
+- **kebab-case file names** (`start-project.ts`): the usual Node convention,
+  and no names that differ only by case on case-insensitive file systems.
+- **camelCase keys in `~/.prnl/settings.json`**: the file maps to the
+  TypeScript types without a translation layer.
+- Enforced by ESLint: `@typescript-eslint/naming-convention`, and a local rule
+  for file names (defined in `eslint.config.js`, no extra dependency). Names
+  that need quotes (Docker labels, HTTP headers) are exempt. JSON keys are
+  checked through the types that describe the file.

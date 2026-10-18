@@ -1,9 +1,36 @@
+import path from "node:path";
+
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
 // Tests may use node:test, node:assert, etc. in any layer.
 const tests = ["**/*.test.ts"];
+
+// File names are kebab-case (see docs/decisions.md). No published rule covers
+// this without a new dependency, so it is a local one. Everything after the
+// first dot is ignored (`start-project.test.ts` checks `start-project`).
+const local = {
+  rules: {
+    "kebab-case-file-name": {
+      meta: {
+        type: "suggestion",
+        schema: [],
+        messages: { notKebab: "File name '{{name}}' must be kebab-case." },
+      },
+      create(context) {
+        return {
+          Program(node) {
+            const name = path.basename(context.filename).split(".")[0];
+            if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(name)) {
+              context.report({ node, messageId: "notKebab", data: { name } });
+            }
+          },
+        };
+      },
+    },
+  },
+};
 
 export default defineConfig(
   { ignores: ["**/dist/"] },
@@ -17,7 +44,21 @@ export default defineConfig(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    plugins: { local },
     rules: {
+      "local/kebab-case-file-name": "error",
+      // Naming (see docs/decisions.md): camelCase, PascalCase for types.
+      "@typescript-eslint/naming-convention": [
+        "error",
+        { selector: "default", format: ["camelCase"] },
+        { selector: "typeLike", format: ["PascalCase"] },
+        // Names that need quotes (Docker labels, HTTP headers) are not ours.
+        {
+          selector: ["objectLiteralProperty", "typeProperty"],
+          modifiers: ["requiresQuotes"],
+          format: null,
+        },
+      ],
       // node:test's describe/it return promises that the runner already tracks.
       "@typescript-eslint/no-floating-promises": [
         "error",
